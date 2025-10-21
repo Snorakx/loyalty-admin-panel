@@ -15,7 +15,7 @@ interface BrandingStepProps {
 }
 
 export const BrandingStep: React.FC<BrandingStepProps> = ({ 
-  data, 
+  data: _data, 
   updateData, 
   onNext, 
   onBack, 

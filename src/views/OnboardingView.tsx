@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/ui/Card/Card';
-import { Button } from '../components/ui/Button/Button';
 import { BasicInfoStep } from '../components/OnboardingSteps/BasicInfoStep';
 import { LocationStep } from '../components/OnboardingSteps/LocationStep';
 import { BillingStep } from '../components/OnboardingSteps/BillingStep';
@@ -10,7 +9,6 @@ import { ProgramStep } from '../components/OnboardingSteps/ProgramStep';
 import { useToast } from '../contexts/ToastContext';
 import { OnboardingService } from '../services/onboarding.service';
 import { supabase } from '../repositories/supabase.client';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './OnboardingView.module.scss';
 
 export interface OnboardingData {

@@ -1,10 +1,11 @@
 import { TenantRepository, Tenant, Location, LoyaltyProgram } from '../repositories/tenant.repository';
 import { AuthService } from './auth.service';
+import { User } from '../types/auth.types';
 import { createLogger } from '../utils/logger';
 
 export class TenantService {
   private tenantRepository: TenantRepository;
-  private authService: AuthService;
+  public authService: AuthService;
   private logger = createLogger('TenantService');
   
   // Cache for dashboard data

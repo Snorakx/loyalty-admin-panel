@@ -10,6 +10,7 @@ interface ButtonProps {
   disabled?: boolean;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
+  className?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -20,14 +21,16 @@ export const Button: React.FC<ButtonProps> = ({
   fullWidth = false,
   disabled = false,
   onClick,
-  type = 'button'
+  type = 'button',
+  className: customClassName
 }) => {
   const className = [
     styles.button,
     styles[variant],
     styles[size],
     fullWidth ? styles.fullWidth : '',
-    disabled ? styles.disabled : ''
+    disabled ? styles.disabled : '',
+    customClassName || ''
   ].filter(Boolean).join(' ');
 
   return (

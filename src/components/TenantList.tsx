@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from './ui/Card/Card';
 import { Button } from './ui/Button/Button';
 import { Input } from './ui/Input/Input';
-import { Building2, Edit, Trash2, Plus, MapPin } from 'lucide-react';
+import { Building2, Edit, Trash2, Plus } from 'lucide-react';
 import styles from './TenantList.module.scss';
 
 interface Tenant {

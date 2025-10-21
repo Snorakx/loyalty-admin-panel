@@ -16,7 +16,7 @@ export const RegisterView: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  const { values, errors, touched, setFieldValue, setFieldTouched, validateAll } = useFormValidation(
+  const { values, errors, touched, setFieldValue, validateAll } = useFormValidation(
     {
       email: '',
       password: '',

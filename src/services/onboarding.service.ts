@@ -57,7 +57,7 @@ export class OnboardingService {
   /**
    * Get profile completeness score (0-7)
    */
-  async getProfileCompleteness(tenantId: string): Promise<number> {
+  async getProfileCompleteness(_tenantId: string): Promise<number> {
     // This will be implemented when we have the SQL function
     // For now, return a placeholder
     return 5;

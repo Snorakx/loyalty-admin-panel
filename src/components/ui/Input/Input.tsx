@@ -10,6 +10,7 @@ interface InputProps {
   onChange?: (value: string) => void;
   onBlur?: () => void;
   onFocus?: () => void;
+  className?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -20,7 +21,8 @@ export const Input: React.FC<InputProps> = ({
   disabled = false,
   onChange,
   onBlur,
-  onFocus
+  onFocus,
+  className
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(e.target.value);
@@ -30,7 +32,7 @@ export const Input: React.FC<InputProps> = ({
     <input
       id={id}
       type={type}
-      className={styles.input}
+      className={`${styles.input} ${className || ''}`}
       placeholder={placeholder}
       value={value}
       disabled={disabled}
