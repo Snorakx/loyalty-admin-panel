@@ -9,7 +9,7 @@ interface FormFieldProps {
   error?: string | null;
   required?: boolean;
   helperText?: string;
-  type?: string;
+  type?: 'text' | 'email' | 'tel' | 'password' | 'number';
   placeholder?: string;
   id?: string;
   disabled?: boolean;
