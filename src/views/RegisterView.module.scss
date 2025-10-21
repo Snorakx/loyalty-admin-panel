@@ -1,0 +1,107 @@
+@import '../styles/variables.scss';
+
+.registerView {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $background-secondary;
+  padding: $spacing-lg;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+}
+
+.registerCard {
+  padding: $spacing-2xl;
+  
+  @media (max-width: 768px) {
+    padding: $spacing-lg;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+}
+
+.icon {
+  color: $color-primary;
+  margin-bottom: $spacing-md;
+}
+
+.title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  margin: 0 0 $spacing-sm 0;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.termsWrapper {
+  margin: $spacing-sm 0;
+}
+
+.termsLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+  font-size: $font-size-sm;
+  color: $text-primary;
+  cursor: pointer;
+  
+  span {
+    line-height: 1.5;
+  }
+}
+
+.checkbox {
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.link {
+  color: $color-primary;
+  text-decoration: none;
+  font-weight: $font-weight-medium;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: $spacing-md;
+}
+
+.footer {
+  margin-top: $spacing-xl;
+  padding-top: $spacing-lg;
+  border-top: 1px solid $border-color;
+  text-align: center;
+}
+
+.footerText {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  margin: 0;
+}
+

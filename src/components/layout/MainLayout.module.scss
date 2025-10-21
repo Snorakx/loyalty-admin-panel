@@ -1,0 +1,15 @@
+@import '../../styles/variables.scss';
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  background: $color-background;
+}
+
+.mainContent {
+  flex: 1;
+  padding: $spacing-xl;
+  overflow-y: auto;
+  max-width: 100%;
+}
+

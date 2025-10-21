@@ -1,0 +1,90 @@
+@import '../../styles/variables.scss';
+
+.sidebar {
+  width: 280px;
+  background: white;
+  border-right: 1px solid $color-border;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.sidebarHeader {
+  padding: $spacing-lg;
+  border-bottom: 1px solid $color-border;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  color: $color-primary;
+  
+  h2 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    margin: 0;
+  }
+}
+
+.userInfo {
+  padding: $spacing-lg;
+  border-bottom: 1px solid $color-border;
+  background: $color-background;
+}
+
+.userRole {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+  margin-bottom: $spacing-xs;
+}
+
+.userEmail {
+  color: $color-text-primary;
+  font-size: $font-size-sm;
+  margin-bottom: $spacing-xs;
+  word-break: break-word;
+}
+
+.userTenant {
+  color: $color-text-secondary;
+  font-size: $font-size-xs;
+  font-family: monospace;
+}
+
+.sidebarNav {
+  flex: 1;
+  padding: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  overflow-y: auto;
+}
+
+.navItem {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  color: $color-text-secondary;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-weight: $font-weight-medium;
+  
+  &:hover {
+    background: $color-background;
+    color: $color-primary;
+  }
+  
+  &.active {
+    background: rgba($color-primary, 0.1);
+    color: $color-primary;
+  }
+}
+
+.sidebarFooter {
+  padding: $spacing-lg;
+  border-top: 1px solid $color-border;
+}
+

@@ -1,0 +1,153 @@
+@import '../styles/variables.scss';
+
+.onboardingView {
+  min-height: 100vh;
+  background: $background-secondary;
+  padding: $spacing-xl $spacing-lg;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $spacing-2xl;
+}
+
+.title {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  margin: 0 0 $spacing-sm 0;
+}
+
+.subtitle {
+  font-size: $font-size-base;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.progressWrapper {
+  margin-bottom: $spacing-xl;
+}
+
+.progressSteps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+}
+
+.progressStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xs;
+  flex: 1;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.stepNumber {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: $background-primary;
+  border: 2px solid $border-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-semibold;
+  color: $text-secondary;
+  transition: all 0.3s ease;
+  z-index: 1;
+  
+  .active & {
+    background: $color-primary;
+    border-color: $color-primary;
+    color: $color-white;
+  }
+  
+  .completed & {
+    background: $color-success;
+    border-color: $color-success;
+    color: $color-white;
+  }
+}
+
+.stepInfo {
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    text-align: left;
+    flex: 1;
+  }
+}
+
+.stepTitle {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-primary;
+  
+  .active & {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.stepOptional {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  margin-top: 2px;
+}
+
+.stepConnector {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  right: -50%;
+  height: 2px;
+  background: $border-color;
+  z-index: 0;
+  
+  .completed & {
+    background: $color-success;
+  }
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.progressBar {
+  height: 4px;
+  background: $border-color;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: $color-primary;
+  transition: width 0.3s ease;
+}
+
+.stepCard {
+  padding: $spacing-2xl;
+  
+  @media (max-width: 768px) {
+    padding: $spacing-lg;
+  }
+}
+

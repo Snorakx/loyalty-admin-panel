@@ -1,0 +1,45 @@
+@import '../../../styles/variables.scss';
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-md;
+}
+
+.label {
+  font-size: $font-size-sm;
+  font-weight: 500;
+  color: $text-primary;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.required {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.inputError {
+  border-color: #dc2626 !important;
+  
+  &:focus {
+    border-color: #dc2626 !important;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+  }
+}
+
+.errorMessage {
+  font-size: $font-size-sm;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.helperText {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+

@@ -1,0 +1,68 @@
+@import '../../styles/variables.scss';
+
+.loginView {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 15%) 100%);
+  padding: $spacing-md;
+}
+
+.loginCard {
+  background: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-xl;
+  padding: $spacing-xl;
+  width: 100%;
+  max-width: 420px;
+}
+
+.loginHeader {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  
+  .logo {
+    color: $color-primary;
+    margin-bottom: $spacing-md;
+  }
+  
+  h1 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-xs;
+  }
+  
+  p {
+    color: $color-text-secondary;
+    font-size: $font-size-sm;
+  }
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.registerLink {
+  margin-top: $spacing-lg;
+  text-align: center;
+  
+  p {
+    color: $color-text-secondary;
+    font-size: $font-size-sm;
+  }
+  
+  a {
+    color: $color-primary;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+

@@ -1,0 +1,243 @@
+@import '../styles/variables.scss';
+
+.businessApprovalView {
+  padding: $spacing-xl;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+}
+
+.completeness {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  
+  strong {
+    color: $color-primary;
+    font-size: $font-size-base;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  margin: 0;
+}
+
+.section {
+  padding: $spacing-xl;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid $border-color;
+  
+  svg {
+    color: $color-primary;
+  }
+  
+  h2 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin: 0;
+  }
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-lg;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-secondary;
+}
+
+.value {
+  font-size: $font-size-base;
+  color: $text-primary;
+  
+  code {
+    background: $background-secondary;
+    padding: 2px 6px;
+    border-radius: $border-radius-sm;
+    font-family: 'Monaco', 'Courier New', monospace;
+    font-size: $font-size-sm;
+  }
+}
+
+.valid {
+  color: $color-success;
+  font-weight: $font-weight-semibold;
+  margin-left: $spacing-xs;
+}
+
+.ownerInfo {
+  margin-top: $spacing-lg;
+  padding-top: $spacing-lg;
+  border-top: 1px solid $border-color;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  
+  strong {
+    color: $text-primary;
+  }
+}
+
+.notProvided {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-lg;
+  text-align: center;
+}
+
+.badge {
+  background: $color-warning;
+  color: white;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $border-radius;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.brandingGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-lg;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.brandingItem {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.brandingImage {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  background: $background-secondary;
+  padding: $spacing-sm;
+}
+
+.placeholder {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed $border-color;
+  border-radius: $border-radius;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+}
+
+.actions {
+  padding: $spacing-xl;
+}
+
+.actionButtons {
+  display: flex;
+  gap: $spacing-md;
+  justify-content: center;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.approveButton {
+  background: $color-success !important;
+  
+  &:hover {
+    background: darken($color-success, 10%) !important;
+  }
+}
+
+.rejectForm,
+.requestChangesForm {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin: 0;
+  }
+}
+
+.textarea {
+  width: 100%;
+  padding: $spacing-md;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  font-size: $font-size-base;
+  font-family: $font-family;
+  resize: vertical;
+  
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+  }
+}
+
+.formActions {
+  display: flex;
+  gap: $spacing-md;
+  justify-content: flex-end;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.loading,
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: $spacing-lg;
+}
+

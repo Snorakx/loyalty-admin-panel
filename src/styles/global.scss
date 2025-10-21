@@ -1,0 +1,73 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-black);
+  background: var(--color-gray-100);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+// Reset
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
+
+// Utility classes
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+// Admin specific styles
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  
+  .sidebar {
+    width: 250px;
+    background: var(--color-white);
+    border-right: 1px solid var(--color-gray-200);
+    padding: var(--spacing-lg);
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: var(--spacing-lg);
+  }
+}

@@ -1,0 +1,79 @@
+@import '../styles/variables.scss';
+
+.pendingBusinessesView {
+  padding: $spacing-xl;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: $spacing-lg;
+}
+
+.content {
+  padding: $spacing-xl;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid $border-color;
+}
+
+.title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  margin: 0 0 $spacing-xs 0;
+}
+
+.subtitle {
+  font-size: $font-size-base;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  background: $color-warning;
+  color: white;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-lg;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-lg;
+}
+
+.loading {
+  text-align: center;
+  padding: $spacing-2xl;
+  color: $text-secondary;
+}
+
+.emptyState {
+  text-align: center;
+  padding: $spacing-2xl;
+}
+
+.emptyIcon {
+  color: $text-secondary;
+  margin-bottom: $spacing-md;
+}
+
+.emptyTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin: 0 0 $spacing-sm 0;
+}
+
+.emptyText {
+  font-size: $font-size-base;
+  color: $text-secondary;
+  margin: 0;
+}
+
