@@ -105,6 +105,60 @@ export class TenantService {
     return [];
   }
 
+  async createLocation(locationData: Omit<Location, 'id' | 'scan_code' | 'created_at'>): Promise<Location | null> {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      this.logger.error('No user found for creating location');
+      return null;
+    }
+
+    // Only business owners and managers can create locations
+    if (currentUser.role !== 'business_owner' && currentUser.role !== 'manager') {
+      this.logger.error('User does not have permission to create locations', { role: currentUser.role });
+      return null;
+    }
+
+    // Use current user's tenant_id
+    const locationWithTenant = {
+      ...locationData,
+      tenant_id: currentUser.tenant_id!
+    };
+
+    return await this.tenantRepository.createLocation(locationWithTenant);
+  }
+
+  async updateLocation(locationId: string, locationData: Partial<Omit<Location, 'id' | 'tenant_id' | 'scan_code' | 'created_at'>>): Promise<Location | null> {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      this.logger.error('No user found for updating location');
+      return null;
+    }
+
+    // Only business owners and managers can update locations
+    if (currentUser.role !== 'business_owner' && currentUser.role !== 'manager') {
+      this.logger.error('User does not have permission to update locations', { role: currentUser.role });
+      return null;
+    }
+
+    return await this.tenantRepository.updateLocation(locationId, locationData);
+  }
+
+  async deleteLocation(locationId: string): Promise<boolean> {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser) {
+      this.logger.error('No user found for deleting location');
+      return false;
+    }
+
+    // Only business owners and managers can delete locations
+    if (currentUser.role !== 'business_owner' && currentUser.role !== 'manager') {
+      this.logger.error('User does not have permission to delete locations', { role: currentUser.role });
+      return false;
+    }
+
+    return await this.tenantRepository.deleteLocation(locationId);
+  }
+
   async getLoyaltyPrograms(tenantId?: string): Promise<LoyaltyProgram[]> {
     const user = this.authService.getCurrentUser();
     if (!user) {

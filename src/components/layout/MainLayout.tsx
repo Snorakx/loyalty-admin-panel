@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { DashboardView } from '../../views/DashboardView';
+import { LocationsView } from '../../views/LocationsView';
 import { SettingsView } from '../../views/SettingsView';
 import { User } from '../../types/auth.types';
 import styles from './MainLayout.module.scss';
@@ -20,7 +21,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ currentUser, onLogout })
         <Routes>
           <Route path="/" element={<DashboardView />} />
           <Route path="/dashboard" element={<DashboardView />} />
-          <Route path="/locations" element={<div>Locations View (TODO)</div>} />
+          <Route path="/locations" element={<LocationsView />} />
           <Route path="/customers" element={<div>Customers View (TODO)</div>} />
           <Route path="/program" element={<div>Program View (TODO)</div>} />
           <Route path="/settings" element={<SettingsView />} />

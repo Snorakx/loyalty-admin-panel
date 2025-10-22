@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '../components/ui/Card/Card';
 import { Button } from '../components/ui/Button/Button';
 import { DeleteTenantConfirmation } from '../components/ui/DeleteTenantConfirmation';
+import { DeleteLocationConfirmation } from '../components/ui/DeleteLocationConfirmation';
+import { SettingsSkeleton } from '../components/SettingsSkeleton';
 import { TenantService } from '../services/tenant.service';
 import { AuthService } from '../services/auth.service';
-import { Trash2, Settings, AlertTriangle, Loader } from 'lucide-react';
+import { Trash2, Settings, AlertTriangle, MapPin } from 'lucide-react';
 import { createLogger } from '../utils/logger';
 import styles from './SettingsView.module.scss';
 
@@ -19,13 +21,31 @@ interface Tenant {
   created_at: string;
 }
 
+interface Location {
+  id: string;
+  name: string;
+  address: string;
+  city: string;
+  phone?: string;
+  email?: string;
+  created_at: string;
+}
+
 export const SettingsView: React.FC = () => {
   const [deleteConfirmation, setDeleteConfirmation] = useState<{
     isOpen: boolean;
     tenantName: string;
   }>({ isOpen: false, tenantName: '' });
   
+  const [deleteLocationConfirmation, setDeleteLocationConfirmation] = useState<{
+    isOpen: boolean;
+    locationName: string;
+    locationCity: string;
+    locationId: string;
+  }>({ isOpen: false, locationName: '', locationCity: '', locationId: '' });
+  
   const [currentTenant, setCurrentTenant] = useState<Tenant | null>(null);
+  const [locations, setLocations] = useState<Location[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -58,13 +78,22 @@ export const SettingsView: React.FC = () => {
         return;
       }
 
+      const locationsData = await tenantService.getLocations(currentUser.tenant_id);
+      
       setCurrentTenant(tenant);
-      logger.success('Tenant data loaded successfully', { tenantId: tenant.id });
+      setLocations(locationsData);
+      logger.success('Tenant and locations data loaded successfully', { 
+        tenantId: tenant.id, 
+        locationsCount: locationsData.length 
+      });
     } catch (error) {
       logger.error('Error loading tenant data', error);
       setError('Błąd podczas ładowania danych profilu firmy');
     } finally {
-      setLoading(false);
+      // Minimum 1 second loading time for skeleton
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   };
 
@@ -86,15 +115,31 @@ export const SettingsView: React.FC = () => {
     setDeleteConfirmation({ isOpen: false, tenantName: '' });
   };
 
+  const handleDeleteLocationClick = (location: Location) => {
+    setDeleteLocationConfirmation({
+      isOpen: true,
+      locationName: location.name,
+      locationCity: location.city,
+      locationId: location.id
+    });
+  };
+
+  const handleDeleteLocationConfirm = () => {
+    // Tutaj będzie logika wysyłania żądania usunięcia lokalizacji
+    console.log('Delete location request sent', deleteLocationConfirmation.locationId);
+  };
+
+  const handleDeleteLocationCancel = () => {
+    setDeleteLocationConfirmation({ 
+      isOpen: false, 
+      locationName: '', 
+      locationCity: '', 
+      locationId: '' 
+    });
+  };
+
   if (loading) {
-    return (
-      <div className={styles.settingsView}>
-        <div className={styles.loading}>
-          <Loader size={32} className={styles.spinner} />
-          <p>Ładowanie danych profilu firmy...</p>
-        </div>
-      </div>
-    );
+    return <SettingsSkeleton />;
   }
 
   if (error) {
@@ -155,6 +200,51 @@ export const SettingsView: React.FC = () => {
           </div>
         </Card>
 
+        {locations.length > 0 && (
+          <>
+            <div className={styles.separator} />
+            
+            <Card className={styles.locationsCard}>
+              <div className={styles.locationsHeader}>
+                <h2>
+                  <MapPin size={20} />
+                  Lokalizacje ({locations.length})
+                </h2>
+              </div>
+              
+              <div className={styles.locationsList}>
+                {locations.map((location) => (
+                  <div key={location.id} className={styles.locationItem}>
+                    <div className={styles.locationInfo}>
+                      <h3 className={styles.locationName}>{location.name}</h3>
+                      <p className={styles.locationAddress}>
+                        {location.address}, {location.city}
+                      </p>
+                      {location.phone && (
+                        <p className={styles.locationContact}>
+                          📞 {location.phone}
+                        </p>
+                      )}
+                    </div>
+                    <div className={styles.locationActions}>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleDeleteLocationClick(location)}
+                      >
+                        <Trash2 size={14} />
+                        Usuń
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </>
+        )}
+
+        <div className={styles.separator} />
+
         <Card className={styles.dangerCard}>
           <div className={styles.dangerHeader}>
             <AlertTriangle size={24} className={styles.dangerIcon} />
@@ -182,6 +272,16 @@ export const SettingsView: React.FC = () => {
           onClose={handleDeleteCancel}
           onConfirm={handleDeleteConfirm}
           tenantName={deleteConfirmation.tenantName}
+        />
+      )}
+
+      {deleteLocationConfirmation.isOpen && (
+        <DeleteLocationConfirmation
+          isOpen={deleteLocationConfirmation.isOpen}
+          onClose={handleDeleteLocationCancel}
+          onConfirm={handleDeleteLocationConfirm}
+          locationName={deleteLocationConfirmation.locationName}
+          locationCity={deleteLocationConfirmation.locationCity}
         />
       )}
     </div>

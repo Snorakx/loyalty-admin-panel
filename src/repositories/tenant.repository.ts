@@ -15,6 +15,9 @@ export interface Location {
   tenant_id: string;
   name: string;
   address: string;
+  city?: string;
+  phone?: string;
+  email?: string;
   scan_code: string;
   created_at: string;
 }
@@ -116,6 +119,90 @@ export class TenantRepository {
       console.error('Error fetching loyalty programs:', error);
       return [];
     }
+  }
+
+  async createLocation(locationData: Omit<Location, 'id' | 'scan_code' | 'created_at'>): Promise<Location | null> {
+    try {
+      // Generate scan code
+      const scanCode = this.generateScanCode(locationData.name, locationData.address);
+      
+      const { data, error } = await supabase
+        .from('locations')
+        .insert({
+          tenant_id: locationData.tenant_id,
+          name: locationData.name,
+          address: locationData.address,
+          city: locationData.city,
+          phone: locationData.phone,
+          email: locationData.email,
+          scan_code: scanCode
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error creating location:', error);
+        return null;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error creating location:', error);
+      return null;
+    }
+  }
+
+  async updateLocation(locationId: string, locationData: Partial<Omit<Location, 'id' | 'tenant_id' | 'scan_code' | 'created_at'>>): Promise<Location | null> {
+    try {
+      const { data, error } = await supabase
+        .from('locations')
+        .update({
+          name: locationData.name,
+          address: locationData.address,
+          city: locationData.city,
+          phone: locationData.phone,
+          email: locationData.email
+        })
+        .eq('id', locationId)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error updating location:', error);
+        return null;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error updating location:', error);
+      return null;
+    }
+  }
+
+  async deleteLocation(locationId: string): Promise<boolean> {
+    try {
+      const { error } = await supabase
+        .from('locations')
+        .delete()
+        .eq('id', locationId);
+
+      if (error) {
+        console.error('Error deleting location:', error);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error deleting location:', error);
+      return false;
+    }
+  }
+
+  private generateScanCode(name: string, address: string): string {
+    // Simple scan code generation - in real app this would be more sophisticated
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substring(2, 8);
+    return `${name.substring(0, 3).toUpperCase()}-${address.substring(0, 3).toUpperCase()}-${timestamp}-${random}`.toUpperCase();
   }
 
   async createTenant(tenantData: Omit<Tenant, 'id' | 'created_at'>): Promise<Tenant | null> {

@@ -18,11 +18,29 @@ export const LocationStep: React.FC<LocationStepProps> = ({ data, updateData, on
   const { values, errors, touched, setFieldValue, setFieldTouched, validateAll } = useFormValidation(
     {
       locationName: data.locationName,
-      locationAddress: data.locationAddress
+      locationAddress: data.locationAddress,
+      locationCity: data.locationCity || '',
+      locationPhone: data.locationPhone || '',
+      locationEmail: data.locationEmail || ''
     },
     {
       locationName: (value) => validateLength(value, 2, 100, 'Nazwa lokalizacji'),
-      locationAddress: (value) => validateLength(value, 5, 500, 'Adres')
+      locationAddress: (value) => validateLength(value, 5, 500, 'Adres'),
+      locationCity: (value) => value ? validateLength(value, 2, 50, 'Miasto') : null,
+      locationPhone: (value) => {
+        if (!value) return null;
+        if (!/^[\+]?[0-9\s\-\(\)]{9,}$/.test(value)) {
+          return 'Nieprawidłowy format telefonu';
+        }
+        return null;
+      },
+      locationEmail: (value) => {
+        if (!value) return null;
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          return 'Nieprawidłowy format email';
+        }
+        return null;
+      }
     }
   );
 
@@ -30,7 +48,10 @@ export const LocationStep: React.FC<LocationStepProps> = ({ data, updateData, on
     if (validateAll()) {
       updateData({
         locationName: values.locationName,
-        locationAddress: values.locationAddress
+        locationAddress: values.locationAddress,
+        locationCity: values.locationCity,
+        locationPhone: values.locationPhone,
+        locationEmail: values.locationEmail
       });
       onNext();
     }
@@ -82,6 +103,45 @@ export const LocationStep: React.FC<LocationStepProps> = ({ data, updateData, on
             Podaj pełny adres z ulicą, numerem, kodem pocztowym i miastem
           </span>
         </div>
+
+        <FormField
+          id="location-city"
+          label="Miasto"
+          value={values.locationCity}
+          onChange={(value) => {
+            setFieldValue('locationCity', value);
+            setFieldTouched('locationCity', true);
+          }}
+          error={touched.locationCity ? errors.locationCity : null}
+          placeholder="np. Warszawa"
+          helperText="Miasto, w którym znajduje się lokalizacja"
+        />
+
+        <FormField
+          id="location-phone"
+          label="Telefon"
+          value={values.locationPhone}
+          onChange={(value) => {
+            setFieldValue('locationPhone', value);
+            setFieldTouched('locationPhone', true);
+          }}
+          error={touched.locationPhone ? errors.locationPhone : null}
+          placeholder="np. +48 123 456 789"
+          helperText="Numer telefonu do lokalizacji (opcjonalne)"
+        />
+
+        <FormField
+          id="location-email"
+          label="Email"
+          value={values.locationEmail}
+          onChange={(value) => {
+            setFieldValue('locationEmail', value);
+            setFieldTouched('locationEmail', true);
+          }}
+          error={touched.locationEmail ? errors.locationEmail : null}
+          placeholder="np. kontakt@firma.pl"
+          helperText="Email do lokalizacji (opcjonalne)"
+        />
 
         <div className={styles.infoBox}>
           <p className={styles.infoText}>

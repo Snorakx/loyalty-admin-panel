@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Card } from '../components/ui/Card/Card';
 import { Button } from '../components/ui/Button/Button';
 import { Alert } from '../components/ui/Alert/Alert';
+import { BusinessApprovalSkeleton } from '../components/BusinessApprovalSkeleton';
 import { ApprovalService } from '../services/approval.service';
 import { BusinessDetails } from '../repositories/approval.repository';
 import { useToast } from '../contexts/ToastContext';
@@ -39,7 +40,10 @@ export const BusinessApprovalView: React.FC = () => {
       console.error('Error loading business details:', error);
       showError('Nie udało się załadować szczegółów biznesu');
     } finally {
-      setLoading(false);
+      // Minimum 1 second loading time for skeleton
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   };
 
@@ -136,11 +140,7 @@ export const BusinessApprovalView: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className={styles.loading}>
-        <p>Ładowanie szczegółów biznesu...</p>
-      </div>
-    );
+    return <BusinessApprovalSkeleton />;
   }
 
   if (!business) {

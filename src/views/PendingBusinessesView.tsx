@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/ui/Card/Card';
 import { Button } from '../components/ui/Button/Button';
 import { Table, TableHeader, TableBody, TableRow, TableCell, TableHeaderCell } from '../components/ui/Table';
+import { PendingBusinessesSkeleton } from '../components/PendingBusinessesSkeleton';
 import { ApprovalService } from '../services/approval.service';
 import { PendingBusiness } from '../repositories/approval.repository';
 import { ArrowLeft, Eye, Clock } from 'lucide-react';
@@ -26,7 +27,10 @@ export const PendingBusinessesView: React.FC = () => {
     } catch (error) {
       console.error('Error loading pending businesses:', error);
     } finally {
-      setLoading(false);
+      // Minimum 1 second loading time for skeleton
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   };
 
@@ -67,7 +71,7 @@ export const PendingBusinessesView: React.FC = () => {
         </div>
 
         {loading ? (
-          <div className={styles.loading}>Ładowanie...</div>
+          <PendingBusinessesSkeleton />
         ) : businesses.length === 0 ? (
           <div className={styles.emptyState}>
             <Clock size={48} className={styles.emptyIcon} />

@@ -13,6 +13,9 @@ export interface CreateBusinessData {
   // Location
   locationName: string;
   locationAddress: string;
+  locationCity?: string;
+  locationPhone?: string;
+  locationEmail?: string;
   
   // Billing (optional)
   companyName?: string;
@@ -87,6 +90,9 @@ export class OnboardingRepository {
           tenant_id: tenantId,
           name: data.locationName,
           address: data.locationAddress,
+          city: data.locationCity,
+          phone: data.locationPhone,
+          email: data.locationEmail,
           scan_code: scanCode
         });
 

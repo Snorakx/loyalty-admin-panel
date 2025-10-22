@@ -22,6 +22,9 @@ export interface OnboardingData {
   // Step 2: Location
   locationName: string;
   locationAddress: string;
+  locationCity?: string;
+  locationPhone?: string;
+  locationEmail?: string;
   
   // Step 3: Billing (optional)
   companyName?: string;
@@ -113,6 +116,9 @@ export const OnboardingView: React.FC = () => {
         contactPhone: data.contactPhone,
         locationName: data.locationName,
         locationAddress: data.locationAddress,
+        locationCity: data.locationCity,
+        locationPhone: data.locationPhone,
+        locationEmail: data.locationEmail,
         companyName: data.companyName,
         nip: data.nip,
         streetAddress: data.streetAddress,
