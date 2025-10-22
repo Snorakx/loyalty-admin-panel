@@ -1,0 +1,29 @@
+.engagementCard {
+  position: relative;
+  overflow: visible;
+
+  .infoIcon {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    z-index: 20;
+    cursor: pointer;
+    color: var(--color-gray-600);
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+
+  .examples {
+    div {
+      margin-bottom: var(--spacing-xs);
+      font-size: var(--font-size-xs);
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

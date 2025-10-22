@@ -1,56 +1,42 @@
 import React from 'react';
-import { Card } from './ui/Card/Card';
+import { StatCard } from './ui/StatCard';
+import { EngagementCard } from './ui/EngagementCard';
 import { Users, MapPin, CreditCard, TrendingUp } from 'lucide-react';
 import styles from './DashboardStats.module.scss';
 
-interface StatCardProps {
-  id?: string;
-  title: string;
-  value: number | string;
-  icon: React.ReactNode;
-  trend?: 'up' | 'down' | 'neutral';
-  trendValue?: string;
-}
-
-const StatCard: React.FC<StatCardProps> = ({
-  id,
-  title,
-  value,
-  icon,
-  trend,
-  trendValue
-}) => (
-  <Card id={id} className={styles.statCard}>
-    <div className={styles.icon}>
-      {icon}
-    </div>
-    <div className={styles.content}>
-      <h3 className={styles.title}>{title}</h3>
-      <div className={styles.valueRow}>
-        <span className={styles.value}>{value}</span>
-        {trend && trendValue && (
-          <span className={`${styles.trend} ${styles[trend]}`}>
-            {trend === 'up' ? '↗' : trend === 'down' ? '↘' : '→'} {trendValue}
-          </span>
-        )}
-      </div>
-    </div>
-  </Card>
-);
 
 interface DashboardStatsProps {
   totalCustomers: number;
   totalStamps: number;
   activeCards: number;
-  revenue: number;
+  engagement: number;
+  customersTrend: number;
+  stampsTrend: number;
+  cardsTrend: number;
+  engagementTrend: number;
 }
 
 export const DashboardStats: React.FC<DashboardStatsProps> = ({
   totalCustomers,
   totalStamps,
   activeCards,
-  revenue
+  engagement,
+  customersTrend,
+  stampsTrend,
+  cardsTrend,
+  engagementTrend
 }) => {
+  const formatTrend = (trend: number) => {
+    if (trend > 0) return { trend: 'up' as const, trendValue: `+${trend}%` };
+    if (trend < 0) return { trend: 'down' as const, trendValue: `${trend}%` };
+    return { trend: 'neutral' as const, trendValue: '0%' };
+  };
+
+  const customersTrendData = formatTrend(customersTrend);
+  const stampsTrendData = formatTrend(stampsTrend);
+  const cardsTrendData = formatTrend(cardsTrend);
+  const engagementTrendData = formatTrend(engagementTrend);
+
   return (
     <div className={styles.dashboardStats}>
       <StatCard
@@ -58,32 +44,32 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({
         title="Klienci"
         value={totalCustomers}
         icon={<Users size={24} />}
-        trend="up"
-        trendValue="+12%"
+        trend={customersTrendData.trend}
+        trendValue={customersTrendData.trendValue}
       />
       <StatCard
         id="stat-stamps"
         title="Stemple dzisiaj"
         value={totalStamps}
         icon={<MapPin size={24} />}
-        trend="up"
-        trendValue="+8%"
+        trend={stampsTrendData.trend}
+        trendValue={stampsTrendData.trendValue}
       />
       <StatCard
         id="stat-cards"
         title="Aktywne karty"
         value={activeCards}
         icon={<CreditCard size={24} />}
-        trend="neutral"
-        trendValue="0%"
+        trend={cardsTrendData.trend}
+        trendValue={cardsTrendData.trendValue}
       />
-      <StatCard
-        id="stat-revenue"
-        title="Przychód"
-        value={`${revenue} zł`}
+      <EngagementCard
+        id="stat-engagement"
+        title="Zaangażowanie klientów"
+        value={engagement}
         icon={<TrendingUp size={24} />}
-        trend="up"
-        trendValue="+15%"
+        trend={engagementTrendData.trend}
+        trendValue={engagementTrendData.trendValue}
       />
     </div>
   );

@@ -39,7 +39,11 @@ export const DashboardView: React.FC = () => {
     totalCustomers: 0,
     totalStamps: 0,
     activeCards: 0,
-    revenue: 0
+    engagement: 0,
+    customersTrend: 0,
+    stampsTrend: 0,
+    cardsTrend: 0,
+    engagementTrend: 0
   });
 
   const [tenantService] = useState(() => TenantService.getInstance());
@@ -74,10 +78,14 @@ export const DashboardView: React.FC = () => {
       setTenants(dashboardData.tenants);
       setLocations(dashboardData.locations);
       setStats({
-        totalCustomers: dashboardData.stats.totalTenants * 100, // Mock calculation
-        totalStamps: dashboardData.stats.totalLocations * 50, // Mock calculation
-        activeCards: dashboardData.stats.activePrograms * 25, // Mock calculation
-        revenue: dashboardData.stats.totalTenants * 5000 // Mock calculation
+        totalCustomers: dashboardData.stats.totalCustomers || 0,
+        totalStamps: dashboardData.stats.stampsToday || 0,
+        activeCards: dashboardData.stats.activeCards || 0,
+        engagement: dashboardData.stats.engagement || 0,
+        customersTrend: dashboardData.stats.customersTrend || 0,
+        stampsTrend: dashboardData.stats.stampsTrend || 0,
+        cardsTrend: dashboardData.stats.cardsTrend || 0,
+        engagementTrend: dashboardData.stats.engagementTrend || 0
       });
     } catch (error) {
       logger.error('Error loading dashboard data', error);
@@ -162,7 +170,16 @@ export const DashboardView: React.FC = () => {
         </div>
       </div>
 
-      <DashboardStats {...stats} />
+      <DashboardStats 
+        totalCustomers={stats.totalCustomers}
+        totalStamps={stats.totalStamps}
+        activeCards={stats.activeCards}
+        engagement={stats.engagement}
+        customersTrend={stats.customersTrend}
+        stampsTrend={stats.stampsTrend}
+        cardsTrend={stats.cardsTrend}
+        engagementTrend={stats.engagementTrend}
+      />
 
       <div className={styles.tabs}>
         <button 

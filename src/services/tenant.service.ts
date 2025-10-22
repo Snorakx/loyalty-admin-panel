@@ -13,7 +13,21 @@ export class TenantService {
     tenants: Tenant[];
     locations: Location[];
     loyaltyPrograms: LoyaltyProgram[];
-    stats: any;
+    stats: {
+      totalTenants: number;
+      totalLocations: number;
+      totalLoyaltyPrograms: number;
+      activePrograms: number;
+      totalCustomers: number;
+      totalStamps: number;
+      activeCards: number;
+      stampsToday: number;
+      customersTrend: number;
+      stampsTrend: number;
+      cardsTrend: number;
+      engagement: number;
+      engagementTrend: number;
+    };
   } | null = null;
   private cacheTimestamp: number = 0;
   private readonly CACHE_DURATION = 30000; // 30 seconds
@@ -123,7 +137,26 @@ export class TenantService {
   }
 
   // Get all dashboard data in one call (cached)
-  async getDashboardData() {
+  async getDashboardData(): Promise<{
+    tenants: Tenant[];
+    locations: Location[];
+    loyaltyPrograms: LoyaltyProgram[];
+    stats: {
+      totalTenants: number;
+      totalLocations: number;
+      totalLoyaltyPrograms: number;
+      activePrograms: number;
+      totalCustomers: number;
+      totalStamps: number;
+      activeCards: number;
+      stampsToday: number;
+      customersTrend: number;
+      stampsTrend: number;
+      cardsTrend: number;
+      engagement: number;
+      engagementTrend: number;
+    };
+  }> {
     this.logger.debug('Fetching dashboard data...');
     
     // Check cache first
@@ -144,7 +177,16 @@ export class TenantService {
             totalTenants: 0,
             totalLocations: 0,
             totalLoyaltyPrograms: 0,
-            activePrograms: 0
+            activePrograms: 0,
+            totalCustomers: 0,
+            totalStamps: 0,
+            activeCards: 0,
+            stampsToday: 0,
+            customersTrend: 0,
+            stampsTrend: 0,
+            cardsTrend: 0,
+            engagement: 0,
+            engagementTrend: 0
           }
         };
         this.dashboardCache = emptyData;
@@ -153,17 +195,19 @@ export class TenantService {
       }
 
       // Fetch all data in parallel
-      const [tenants, locations, loyaltyPrograms] = await Promise.all([
+      const [tenants, locations, loyaltyPrograms, dashboardStats] = await Promise.all([
         this.getTenants(user),
         this.getLocations(undefined, user),
-        this.getLoyaltyPrograms()
+        this.getLoyaltyPrograms(),
+        this.getDashboardStats(user)
       ]);
 
       const stats = {
         totalTenants: tenants.length,
         totalLocations: locations.length,
         totalLoyaltyPrograms: loyaltyPrograms.length,
-        activePrograms: loyaltyPrograms.filter(p => p.active).length
+        activePrograms: loyaltyPrograms.filter((p: LoyaltyProgram) => p.active).length,
+        ...dashboardStats
       };
 
       const dashboardData = {
@@ -189,7 +233,16 @@ export class TenantService {
           totalTenants: 0,
           totalLocations: 0,
           totalLoyaltyPrograms: 0,
-          activePrograms: 0
+          activePrograms: 0,
+          totalCustomers: 0,
+          totalStamps: 0,
+          activeCards: 0,
+          stampsToday: 0,
+          customersTrend: 0,
+          stampsTrend: 0,
+          cardsTrend: 0,
+          engagement: 0,
+          engagementTrend: 0
         }
       };
       this.dashboardCache = emptyData;
@@ -198,9 +251,53 @@ export class TenantService {
     }
   }
 
-  // Dashboard statistics (for backward compatibility)
-  async getDashboardStats() {
-    const dashboardData = await this.getDashboardData();
-    return dashboardData.stats;
+  // Get real dashboard statistics from database
+  async getDashboardStats(user?: User): Promise<{
+    totalCustomers: number;
+    totalStamps: number;
+    activeCards: number;
+    stampsToday: number;
+    customersTrend: number;
+    stampsTrend: number;
+    cardsTrend: number;
+    engagement: number;
+    engagementTrend: number;
+  }> {
+    const currentUser = user || this.authService.getCurrentUser();
+    if (!currentUser) {
+      return {
+        totalCustomers: 0,
+        totalStamps: 0,
+        activeCards: 0,
+        stampsToday: 0,
+        customersTrend: 0,
+        stampsTrend: 0,
+        cardsTrend: 0,
+        engagement: 0,
+        engagementTrend: 0
+      };
+    }
+
+    // Super admin can see all stats
+    if (currentUser.role === 'super_admin') {
+      return await this.tenantRepository.getDashboardStats();
+    }
+
+    // Business owners and managers can only see stats of their assigned tenant
+    if (currentUser.tenant_id) {
+      return await this.tenantRepository.getDashboardStats(currentUser.tenant_id);
+    }
+
+    return {
+      totalCustomers: 0,
+      totalStamps: 0,
+      activeCards: 0,
+      stampsToday: 0,
+      customersTrend: 0,
+      stampsTrend: 0,
+      cardsTrend: 0,
+      engagement: 0,
+      engagementTrend: 0
+    };
   }
 }

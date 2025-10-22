@@ -1,65 +1,8 @@
 @import '../styles/variables.scss';
-@import '../styles/mixins.scss';
 
 .dashboardStats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-2xl);
-  
-  .statCard {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-lg);
-    
-    .icon {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--radius-lg);
-      background: var(--color-primary);
-      color: var(--color-white);
-      @include flex-center;
-    }
-    
-    .content {
-      flex: 1;
-      
-      .title {
-        font-size: var(--font-size-sm);
-        font-weight: var(--font-weight-medium);
-        color: var(--color-gray-500);
-        margin-bottom: var(--spacing-xs);
-      }
-      
-      .valueRow {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-        
-        .value {
-          font-size: var(--font-size-2xl);
-          font-weight: var(--font-weight-bold);
-          color: var(--color-black);
-        }
-        
-        .trend {
-          font-size: var(--font-size-sm);
-          font-weight: var(--font-weight-medium);
-          
-          &.up {
-            color: var(--color-success);
-          }
-          
-          &.down {
-            color: var(--color-error);
-          }
-          
-          &.neutral {
-            color: var(--color-gray-500);
-          }
-        }
-      }
-    }
-  }
 }
