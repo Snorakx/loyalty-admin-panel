@@ -1,0 +1,1 @@
+export { DeleteTenantConfirmation } from './DeleteTenantConfirmation';

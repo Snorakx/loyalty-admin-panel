@@ -220,6 +220,7 @@ export const DashboardView: React.FC = () => {
           </div>
         )}
 
+
         <div className={styles.rightColumn}>
           {qrCode && (
             <Card className={styles.qrCard}>

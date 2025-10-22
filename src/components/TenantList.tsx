@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from './ui/Card/Card';
 import { Button } from './ui/Button/Button';
 import { Input } from './ui/Input/Input';
-import { Building2, Edit, Trash2, Plus } from 'lucide-react';
+import { Building2, Plus } from 'lucide-react';
 import styles from './TenantList.module.scss';
 
 interface Tenant {
@@ -17,15 +17,11 @@ interface Tenant {
 interface TenantListProps {
   tenants: Tenant[];
   onAddTenant: (name: string, businessType: string) => void;
-  onEditTenant: (id: string, name: string, businessType: string) => void;
-  onDeleteTenant: (id: string) => void;
 }
 
 export const TenantList: React.FC<TenantListProps> = ({
   tenants,
-  onAddTenant,
-  onEditTenant,
-  onDeleteTenant
+  onAddTenant
 }) => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingTenant, setEditingTenant] = useState<Tenant | null>(null);
@@ -57,6 +53,7 @@ export const TenantList: React.FC<TenantListProps> = ({
     setEditingTenant(null);
     setFormData({ name: '', businessType: '' });
   };
+
 
   return (
     <div className={styles.tenantList}>
@@ -120,22 +117,6 @@ export const TenantList: React.FC<TenantListProps> = ({
                 </div>
               </div>
               <div className={styles.tenantActions}>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleEdit(tenant)}
-                  disabled={editingTenant !== null}
-                >
-                  <Edit size={16} />
-                </Button>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => onDeleteTenant(tenant.id)}
-                  disabled={editingTenant !== null}
-                >
-                  <Trash2 size={16} />
-                </Button>
               </div>
             </div>
             
@@ -183,6 +164,7 @@ export const TenantList: React.FC<TenantListProps> = ({
           </Card>
         ))}
       </div>
+
     </div>
   );
 };

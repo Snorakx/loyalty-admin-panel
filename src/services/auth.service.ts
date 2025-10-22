@@ -220,4 +220,27 @@ export class AuthService {
     const user = await this.getCurrentUser();
     return user?.tenant_id || null;
   }
+
+  async verifyPassword(email: string, password: string): Promise<boolean> {
+    this.logger.debug('Verifying password for user', { email });
+    
+    try {
+      // Próbujemy zalogować się z podanymi danymi
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        this.logger.warn('Password verification failed', { error: error.message });
+        return false;
+      }
+
+      this.logger.debug('Password verification successful');
+      return true;
+    } catch (error) {
+      this.logger.error('Password verification error', error);
+      return false;
+    }
+  }
 }
