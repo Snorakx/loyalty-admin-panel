@@ -7,22 +7,109 @@
     top: var(--spacing-sm);
     right: var(--spacing-sm);
     z-index: 20;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--color-white);
+    border-radius: 50%;
     color: var(--color-gray-600);
-    transition: color 0.2s ease;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     
     &:hover {
       color: var(--color-primary);
+      background: var(--color-primary-light);
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+.drawerContent {
+  .description {
+    margin-bottom: var(--spacing-xl);
+    
+    h3 {
+      margin: 0 0 var(--spacing-sm) 0;
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+    
+    p {
+      margin: 0;
+      font-size: var(--font-size-base);
+      line-height: 1.6;
+      color: var(--color-gray-700);
     }
   }
 
   .examples {
-    div {
-      margin-bottom: var(--spacing-xs);
-      font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-xl);
+    
+    h3 {
+      margin: 0 0 var(--spacing-md) 0;
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+    
+    .exampleItem {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+      background: var(--color-gray-50);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-sm);
       
       &:last-child {
         margin-bottom: 0;
+      }
+      
+      .value {
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-primary);
+        min-width: 40px;
+      }
+      
+      .explanation {
+        font-size: var(--font-size-sm);
+        line-height: 1.5;
+        color: var(--color-gray-700);
+      }
+    }
+  }
+
+  .tips {
+    h3 {
+      margin: 0 0 var(--spacing-md) 0;
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-900);
+    }
+    
+    ul {
+      margin: 0;
+      padding-left: var(--spacing-lg);
+      
+      li {
+        margin-bottom: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+        line-height: 1.5;
+        color: var(--color-gray-700);
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
   }

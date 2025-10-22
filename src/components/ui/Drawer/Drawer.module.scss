@@ -1,44 +1,120 @@
 @import '../../../styles/variables.scss';
-@import '../../../styles/mixins.scss';
 
-.overlay {
+.backdrop {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  animation: fadeIn 0.2s ease;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
 }
 
+.drawer {
+  position: fixed;
+  background: var(--color-white);
+  z-index: 1001;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  animation: slideInRight 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  overflow: hidden;
+
+  // Desktop - wysuwany od prawej
+  @media (min-width: 768px) {
+    top: 0;
+    right: 0;
+    width: 600px;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  // Mobile - wysuwany od dołu
+  @media (max-width: 767px) {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 87.5%; // 7/8 wysokości ekranu
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    animation: slideInUp 0.3s ease-out;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-gray-200);
+  flex-shrink: 0;
+  background: var(--color-white);
+
+  .title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+  }
+
+  .closeButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--color-gray-100);
+    border-radius: var(--radius-md);
+    color: var(--color-gray-600);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--color-gray-200);
+      color: var(--color-gray-800);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+.content {
+  flex: 1;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--color-gray-100);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-gray-300);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-400);
+  }
+}
+
+// Animacje
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
-  }
-}
-
-.drawer {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  background: $card-background;
-  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  
-  &.right {
-    right: 0;
-    animation: slideInRight 0.3s ease;
-  }
-  
-  &.left {
-    left: 0;
-    animation: slideInLeft 0.3s ease;
   }
 }
 
@@ -51,71 +127,54 @@
   }
 }
 
-@keyframes slideInLeft {
+@keyframes slideInUp {
   from {
-    transform: translateX(-100%);
+    transform: translateY(100%);
   }
   to {
+    transform: translateY(0);
+  }
+}
+
+// Animacje wyjścia (dodawane przez JavaScript)
+.drawer.closing {
+  animation: slideOutRight 0.2s ease-in forwards;
+}
+
+.backdrop.closing {
+  animation: fadeOut 0.2s ease-in forwards;
+}
+
+@keyframes slideOutRight {
+  from {
     transform: translateX(0);
   }
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $spacing-lg;
-  border-bottom: 1px solid $border-color;
-  flex-shrink: 0;
-}
-
-.title {
-  font-size: $font-size-lg;
-  font-weight: 600;
-  color: $text-primary;
-  margin: 0;
-}
-
-.closeButton {
-  background: none;
-  border: none;
-  padding: $spacing-xs;
-  cursor: pointer;
-  color: $text-secondary;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: $border-radius-sm;
-  transition: all 0.2s ease;
-  
-  &:hover {
-    background: $background-secondary;
-    color: $text-primary;
+  to {
+    transform: translateX(100%);
   }
 }
 
-.content {
-  flex: 1;
-  overflow-y: auto;
-  padding: $spacing-lg;
+@keyframes slideOutUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
 }
 
-.drawerHeader {
-  padding-bottom: $spacing-md;
-  border-bottom: 1px solid $border-color;
-  margin-bottom: $spacing-lg;
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
-.drawerBody {
-  flex: 1;
+// Mobile specific animations
+@media (max-width: 767px) {
+  .drawer.closing {
+    animation: slideOutUp 0.2s ease-in forwards;
+  }
 }
-
-.drawerFooter {
-  padding-top: $spacing-lg;
-  border-top: 1px solid $border-color;
-  margin-top: $spacing-lg;
-  display: flex;
-  gap: $spacing-md;
-  justify-content: flex-end;
-}
-
