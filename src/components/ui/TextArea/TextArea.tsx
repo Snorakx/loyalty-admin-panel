@@ -1,56 +1,62 @@
 import React from 'react';
-import styles from './Input.module.scss';
+import styles from './TextArea.module.scss';
 
-interface InputProps {
+interface TextAreaProps {
   id?: string;
-  type?: 'text' | 'email' | 'tel' | 'password' | 'number';
   label?: string;
   placeholder?: string;
-  value?: string | number;
+  value?: string;
   disabled?: boolean;
   maxLength?: number;
+  rows?: number;
   onChange?: (value: string) => void;
   onBlur?: () => void;
   onFocus?: () => void;
   className?: string;
 }
 
-export const Input: React.FC<InputProps> = ({
+export const TextArea: React.FC<TextAreaProps> = ({
   id,
-  type = 'text',
   label,
   placeholder,
   value,
   disabled = false,
   maxLength,
+  rows = 4,
   onChange,
   onBlur,
   onFocus,
   className
 }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange?.(e.target.value);
   };
 
   return (
-    <div className={styles.inputWrapper}>
+    <div className={styles.textareaWrapper}>
       {label && (
         <label htmlFor={id} className={styles.label}>
           {label}
         </label>
       )}
-      <input
+      <textarea
         id={id}
-        type={type}
-        className={`${styles.input} ${className || ''}`}
+        className={`${styles.textarea} ${className || ''}`}
         placeholder={placeholder}
         value={value}
         disabled={disabled}
         maxLength={maxLength}
+        rows={rows}
         onChange={handleChange}
         onBlur={onBlur}
         onFocus={onFocus}
       />
+      {maxLength && (
+        <div className={styles.charCount}>
+          {value?.length || 0}/{maxLength}
+        </div>
+      )}
     </div>
   );
 };
+

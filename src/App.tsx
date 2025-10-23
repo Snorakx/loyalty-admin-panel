@@ -10,6 +10,7 @@ import { MainLayout } from './components/layout/MainLayout';
 import { AuthService } from './services/auth.service';
 import { User, UserRole } from './types/auth.types';
 import { ToastProvider } from './contexts/ToastContext';
+import { AppStateProvider } from './contexts/AppStateContext';
 import { createLogger } from './utils/logger';
 
 const logger = createLogger('App');
@@ -106,45 +107,47 @@ const App: React.FC = () => {
   }
 
   return (
-    <ToastProvider>
-      <Router>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/register" element={<RegisterView />} />
-          
-          {/* Protected routes */}
-          <Route path="/onboarding" element={
-            isAuthenticated ? <OnboardingView /> : <Navigate to="/login" replace />
-          } />
-          
-          {/* Super Admin only routes */}
-          <Route path="/pending-businesses" element={
-            isAuthenticated && currentUser?.role === UserRole.SUPER_ADMIN 
-              ? <PendingBusinessesView /> 
-              : <Navigate to="/" replace />
-          } />
-          <Route path="/pending-businesses/:tenantId" element={
-            isAuthenticated && currentUser?.role === UserRole.SUPER_ADMIN 
-              ? <BusinessApprovalView /> 
-              : <Navigate to="/" replace />
-          } />
-          
-          {/* Redirect root to dashboard for authenticated users */}
-          <Route path="/" element={
-            isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
-          } />
-          
-          {/* Main app with sidebar */}
-          <Route path="/*" element={
-            isAuthenticated ? (
-              <MainLayout currentUser={currentUser} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          } />
-        </Routes>
-      </Router>
-    </ToastProvider>
+    <AppStateProvider>
+      <ToastProvider>
+        <Router>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/register" element={<RegisterView />} />
+            
+            {/* Protected routes */}
+            <Route path="/onboarding" element={
+              isAuthenticated ? <OnboardingView /> : <Navigate to="/login" replace />
+            } />
+            
+            {/* Super Admin only routes */}
+            <Route path="/pending-businesses" element={
+              isAuthenticated && currentUser?.role === UserRole.SUPER_ADMIN 
+                ? <PendingBusinessesView /> 
+                : <Navigate to="/" replace />
+            } />
+            <Route path="/pending-businesses/:tenantId" element={
+              isAuthenticated && currentUser?.role === UserRole.SUPER_ADMIN 
+                ? <BusinessApprovalView /> 
+                : <Navigate to="/" replace />
+            } />
+            
+            {/* Redirect root to dashboard for authenticated users */}
+            <Route path="/" element={
+              isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
+            } />
+            
+            {/* Main app with sidebar */}
+            <Route path="/*" element={
+              isAuthenticated ? (
+                <MainLayout currentUser={currentUser} onLogout={handleLogout} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            } />
+          </Routes>
+        </Router>
+      </ToastProvider>
+    </AppStateProvider>
   );
 };
 

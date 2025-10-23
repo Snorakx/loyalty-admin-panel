@@ -1,0 +1,33 @@
+@import '../../../styles/variables.scss';
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+
+  &.info {
+    background: #DBEAFE;
+    color: #1E40AF;
+  }
+
+  &.success {
+    background: #D1FAE5;
+    color: #065F46;
+  }
+
+  &.warning {
+    background: #FEF3C7;
+    color: #92400E;
+  }
+
+  &.danger {
+    background: #FEE2E2;
+    color: #991B1B;
+  }
+}
+

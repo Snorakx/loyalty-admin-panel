@@ -3,11 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Card } from '../components/ui/Card/Card';
 import { Button } from '../components/ui/Button/Button';
 import { Alert } from '../components/ui/Alert/Alert';
-import { BusinessApprovalSkeleton } from '../components/BusinessApprovalSkeleton';
 import { ApprovalService } from '../services/approval.service';
 import { BusinessDetails } from '../repositories/approval.repository';
 import { useToast } from '../contexts/ToastContext';
 import { supabase } from '../repositories/supabase.client';
+import { Loader } from '../components/ui/Loader';
 import { ArrowLeft, CheckCircle, XCircle, AlertCircle, Building2, MapPin, CreditCard, Image as ImageIcon, Award } from 'lucide-react';
 import styles from './BusinessApprovalView.module.scss';
 
@@ -40,10 +40,7 @@ export const BusinessApprovalView: React.FC = () => {
       console.error('Error loading business details:', error);
       showError('Nie udało się załadować szczegółów biznesu');
     } finally {
-      // Minimum 1 second loading time for skeleton
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      setLoading(false);
     }
   };
 
@@ -140,7 +137,15 @@ export const BusinessApprovalView: React.FC = () => {
   };
 
   if (loading) {
-    return <BusinessApprovalSkeleton />;
+    return (
+      <div className={styles.businessApprovalView}>
+        <Loader 
+          size="lg" 
+          variant="wave" 
+          text="Ładowanie szczegółów biznesu..." 
+        />
+      </div>
+    );
   }
 
   if (!business) {

@@ -3,9 +3,9 @@ import { Card } from '../components/ui/Card/Card';
 import { Button } from '../components/ui/Button/Button';
 import { DeleteTenantConfirmation } from '../components/ui/DeleteTenantConfirmation';
 import { DeleteLocationConfirmation } from '../components/ui/DeleteLocationConfirmation';
-import { SettingsSkeleton } from '../components/SettingsSkeleton';
 import { TenantService } from '../services/tenant.service';
 import { AuthService } from '../services/auth.service';
+import { Loader } from '../components/ui/Loader';
 import { Trash2, Settings, AlertTriangle, MapPin } from 'lucide-react';
 import { createLogger } from '../utils/logger';
 import styles from './SettingsView.module.scss';
@@ -90,10 +90,7 @@ export const SettingsView: React.FC = () => {
       logger.error('Error loading tenant data', error);
       setError('Błąd podczas ładowania danych profilu firmy');
     } finally {
-      // Minimum 1 second loading time for skeleton
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      setLoading(false);
     }
   };
 
@@ -139,7 +136,15 @@ export const SettingsView: React.FC = () => {
   };
 
   if (loading) {
-    return <SettingsSkeleton />;
+    return (
+      <div className={styles.settingsView}>
+        <Loader 
+          size="lg" 
+          variant="pulse" 
+          text="Ładowanie danych profilu firmy..." 
+        />
+      </div>
+    );
   }
 
   if (error) {

@@ -1,0 +1,188 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.campaignForm {
+  margin-bottom: 2rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .closeButton {
+      background: none;
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      border-radius: var(--border-radius);
+      transition: all 0.2s;
+
+      &:hover {
+        background: var(--gray-100);
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  .formContent {
+    .formGroup {
+      margin-bottom: 1.5rem;
+      position: relative;
+
+      .label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        font-family: inherit;
+        font-size: 0.875rem;
+        resize: vertical;
+        transition: border-color 0.2s;
+
+        &:focus {
+          outline: none;
+          border-color: var(--primary-color);
+          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+      }
+
+      .select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        font-family: inherit;
+        font-size: 0.875rem;
+        background: white;
+        cursor: pointer;
+        transition: border-color 0.2s;
+
+        &:focus {
+          outline: none;
+          border-color: var(--primary-color);
+          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+      }
+
+      .charCount {
+        position: absolute;
+        right: 0.75rem;
+        bottom: 0.75rem;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        pointer-events: none;
+      }
+    }
+
+    .preview {
+      background: var(--gray-50);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 1.5rem;
+
+      .previewTitle {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+      }
+
+      .mockNotification {
+        background: white;
+        padding: 1rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+
+        .notifIcon {
+          font-size: 1.5rem;
+          flex-shrink: 0;
+        }
+
+        .notifContent {
+          flex: 1;
+
+          .notifTitle {
+            display: block;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+          }
+
+          .notifMessage {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.4;
+          }
+        }
+      }
+
+      .targetInfo {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin: 0;
+        text-align: center;
+
+        strong {
+          color: var(--primary-color);
+          font-weight: 600;
+        }
+      }
+
+      .warning {
+        background: #FEF3C7;
+        border: 1px solid #F59E0B;
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        margin-top: 1rem;
+        font-size: 0.875rem;
+        color: #92400E;
+        line-height: 1.5;
+
+        ul {
+          margin: 0.5rem 0 0.5rem 1.5rem;
+          padding: 0;
+
+          li {
+            margin: 0.25rem 0;
+          }
+        }
+      }
+    }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+
+      button {
+        min-width: 120px;
+      }
+    }
+  }
+}
+

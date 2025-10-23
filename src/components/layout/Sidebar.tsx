@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/Button/Button';
-import { Building2, Shield, User as UserIcon } from 'lucide-react';
+import { Building2, Shield, User as UserIcon, Bell } from 'lucide-react';
 import { User, UserRole } from '../../types/auth.types';
 import styles from './Sidebar.module.scss';
 
@@ -71,6 +71,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, onLogout }) => {
         </Link>
         <Link to="/locations" className={styles.navItem} id="nav-locations">
           Lokalizacje
+        </Link>
+        <Link to="/campaigns" className={styles.navItem} id="nav-campaigns">
+          <Bell size={16} />
+          Kampanie Push
         </Link>
         <Link to="/customers" className={styles.navItem} id="nav-customers">
           Klienci

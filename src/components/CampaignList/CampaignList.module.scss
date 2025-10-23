@@ -1,0 +1,119 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.campaignList {
+  .tableWrapper {
+    overflow-x: auto;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    background: white;
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        background: var(--gray-50);
+        
+        tr {
+          border-bottom: 1px solid var(--border-color);
+
+          th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+          }
+        }
+      }
+
+      tbody {
+        .row {
+          border-bottom: 1px solid var(--border-color);
+          transition: background-color 0.2s;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          &:hover {
+            background: var(--gray-50);
+          }
+
+          td {
+            padding: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            vertical-align: middle;
+          }
+
+          .nameCell {
+            .campaignName {
+              font-weight: 500;
+              color: var(--text-primary);
+            }
+          }
+
+          .titleCell {
+            max-width: 200px;
+
+            .messageTitle {
+              display: block;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              color: var(--text-secondary);
+            }
+          }
+
+          .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+          }
+
+          .statsCell {
+            font-variant-numeric: tabular-nums;
+
+            .loading {
+              color: var(--text-secondary);
+            }
+
+            .rate {
+              color: var(--text-secondary);
+              font-size: 0.75rem;
+              margin-left: 0.25rem;
+            }
+          }
+
+          .dateCell {
+            color: var(--text-secondary);
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}
+
+.emptyState {
+  padding: 3rem 1rem;
+  text-align: center;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+
+  .emptyMessage {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin: 0;
+  }
+}
+

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '../components/ui/Card/Card';
 import { Button } from '../components/ui/Button/Button';
 import { AddLocationForm } from '../components/ui/AddLocationForm';
-import { LocationsSkeleton } from '../components/LocationsSkeleton';
 import { TenantService } from '../services/tenant.service';
 import { AuthService } from '../services/auth.service';
+import { Loader } from '../components/ui/Loader';
 import { MapPin, Plus, Edit, AlertTriangle } from 'lucide-react';
 import { createLogger } from '../utils/logger';
 import styles from './LocationsView.module.scss';
@@ -58,10 +58,7 @@ export const LocationsView: React.FC = () => {
       logger.error('Error loading locations', error);
       setError('Błąd podczas ładowania lokalizacji');
     } finally {
-      // Minimum 1 second loading time for skeleton
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      setLoading(false);
     }
   };
 
@@ -113,7 +110,15 @@ export const LocationsView: React.FC = () => {
   };
 
   if (loading) {
-    return <LocationsSkeleton />;
+    return (
+      <div className={styles.locationsView}>
+        <Loader 
+          size="lg" 
+          variant="dots" 
+          text="Ładowanie lokalizacji..." 
+        />
+      </div>
+    );
   }
 
   if (error) {
